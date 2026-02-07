@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:17
+    container_name: ${PG_CONTAINER_NAME:-pg-study}
+    ports:
+      - "127.0.0.1:${PG_PORT:-5432}:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?set in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+      POSTGRES_DB: ${POSTGRES_DB:?set in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./datasets/${DBSET:-ec-v0}/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
