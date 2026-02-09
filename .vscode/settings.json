@@ -2,5 +2,6 @@
   "[sql]": {
     "editor.defaultFormatter": "ReneSaarsoo.sql-formatter-vsc",
     "editor.formatOnSave": true
-  }
+  },
+  "SQL-Formatter-VSCode.dialect": "postgresql"
 }
