@@ -5,7 +5,7 @@ CREATE TABLE app_user (
     email TEXT NOT NULL UNIQUE,
     display_name TEXT NOT NULL,
     status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'inactive')),
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now ()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE TABLE product (
@@ -15,7 +15,7 @@ CREATE TABLE product (
     category TEXT NOT NULL,
     price_yen INTEGER NOT NULL CHECK (price_yen >= 0),
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now ()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE TABLE customer_order (
@@ -30,7 +30,7 @@ CREATE TABLE customer_order (
             'delivered'
         )
     ),
-    ordered_at TIMESTAMPTZ NOT NULL DEFAULT now (),
+    ordered_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     total_yen INTEGER NOT NULL CHECK (total_yen >= 0)
 );
 

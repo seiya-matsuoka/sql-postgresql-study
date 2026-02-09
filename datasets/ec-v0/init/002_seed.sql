@@ -18,8 +18,8 @@ VALUES
 INSERT INTO
     customer_order (user_id, order_status, ordered_at, total_yen)
 VALUES
-    (1, 'paid', now () - interval '10 days', 7960),
-    (1, 'delivered', now () - interval '3 days', 800);
+    (1, 'paid', now() - interval '10 days', 7960),
+    (1, 'delivered', now() - interval '3 days', 800);
 
 INSERT INTO
     order_item (
