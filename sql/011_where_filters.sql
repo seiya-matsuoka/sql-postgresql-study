@@ -119,6 +119,18 @@ WHERE
 ORDER BY
     id;
 
+-- 標準SQL（PostgreSQLでも実行可）：LOWER + LIKE で大文字小文字を無視する
+-- ただし一般に「列に関数をかける」ため、インデックスが効きにくい可能性がある。
+SELECT
+    id,
+    name
+FROM
+    product
+WHERE
+    LOWER(name) LIKE LOWER('%note%')
+ORDER BY
+    id;
+
 -- 7) NULLの扱い
 -- 今のデータセットでは NOT NULL が多いので、NULLを“作る”例を少しだけ。
 -- CASEにELSEを付けないと、条件に当たらない行はNULLになる。
