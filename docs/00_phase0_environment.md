@@ -157,3 +157,68 @@ psql -h localhost -p "$PG_PORT" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -v ON_ERRO
   - 今はデータが少ないので速いが、以後の性能学習の基礎になる
 
 ---
+
+## 8. DBeaverで接続（GUI）
+
+### 8.1 接続情報（`.env` と同じ）
+
+- Host: `localhost`
+- Port: `${PG_PORT}`（通常 `5432`）
+- Database: `${POSTGRES_DB}`（例 `studydb`）
+- User: `${POSTGRES_USER}`（例 `study`）
+- Password: `${POSTGRES_PASSWORD}`
+
+### 8.2 まずやること
+
+1. 新規接続（PostgreSQL）
+2. Test Connection（初回はドライバDLが走る場合あり）
+3. SQL Editorを開く
+4. `sql/000_phase0_sanity.sql` の中身を貼って実行
+5. `sql/001_phase0_explain.sql` も同様に実行
+
+### 8.3 見るポイント
+
+- テーブル一覧・データ表示ができる
+- SQL実行結果が見える
+- EXPLAIN結果が確認できる（表示形式はツール側で多少異なる）
+
+---
+
+## 9. 停止・リセット（固定運用）
+
+### 9.1 停止（データは残す）
+
+```bash
+docker compose down
+```
+
+### 9.2 完全リセット（データも消す：init SQLが再実行される）
+
+```bash
+docker compose down -v
+docker compose up -d
+```
+
+注意：
+
+- initを修正したら `down -v` で作り直すか、別プロジェクト名で起動する運用にします。
+
+---
+
+## 10. よく使うpsqlメモ
+
+- 接続情報確認：`\conninfo`
+- 実行結果を縦表示：`\x on` / 自動：`\x auto`
+- 実行時間：`\timing on`
+- テーブル定義：`\d <table>`
+- 終了：`\q`
+
+---
+
+## 11. Phase 0 完了チェックリスト
+
+- [ ] `docker compose ps` で db が起動している
+- [ ] `psql` で接続できる
+- [ ] `sql/000_phase0_sanity.sql` が `-f` で通る
+- [ ] `sql/001_phase0_explain.sql` が `-f` で通る
+- [ ] DBeaverから接続し、同じSQLが実行できる
