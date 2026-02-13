@@ -96,3 +96,64 @@ psql内で実行：
 - `\x auto`：横長結果が見やすい
 
 ---
+
+## 5. psql基本メタコマンド
+
+psql内で順に実行：
+
+```sql
+\conninfo
+\l
+\dt
+\d app_user
+\d product
+\di
+```
+
+- `\dt`：テーブル一覧
+- `\d <table>`：テーブル定義表示
+- `\di`：インデックス一覧
+
+---
+
+## 6. SQLファイル実行（再現性の練習）
+
+### 6.1 ファイル
+
+- `sql/000_phase0_sanity.sql`
+
+### 6.2 実行コマンド（psql）
+
+`.env` を読み込んだ状態で：
+
+```bash
+psql -h localhost -p "$PG_PORT" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -v ON_ERROR_STOP=1 -f sql/000_phase0_sanity.sql
+```
+
+### 6.3 見るポイント
+
+- `version()` が返る
+- `app_user / product / customer_order / order_item` の件数が返る
+- `product` が一覧で表示される
+
+---
+
+## 7. EXPLAINの入口（実行計画を出す）
+
+### 7.1 ファイル
+
+- `sql/001_phase0_explain.sql`
+
+### 7.2 実行（psql）
+
+```bash
+psql -h localhost -p "$PG_PORT" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -v ON_ERROR_STOP=1 -f sql/001_phase0_explain.sql
+```
+
+### 7.3 見るポイント（「慣れる」が目的）
+
+- `EXPLAIN` の結果が出る（`Seq Scan` / `Index Scan` などの文字が見える）
+- `EXPLAIN (ANALYZE, BUFFERS)` は「実際に実行して計測する」ので、結果が増えても驚かない
+  - 今はデータが少ないので速いが、以後の性能学習の基礎になる
+
+---
