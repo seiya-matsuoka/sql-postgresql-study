@@ -1,0 +1,12 @@
+-- phase: 13
+-- topic: バックアップ/リストア補助（SQLでできる部分）
+-- dataset: 任意
+-- 注意:
+--   - CREATE/DROP DATABASE は通常、postgres DB に接続して行うのが安全
+--   - ここでは “コマンドでやるのが基本” なので、SQLはメモ用途
+-- 0) ここは「メモ」：以下は postgres DB に接続して実行する想定
+-- DROP DATABASE IF EXISTS phase13_restore;
+-- CREATE DATABASE phase13_restore;
+-- 1) リストア後の確認例
+-- SELECT COUNT(*) FROM public.customer_order;
+-- SELECT COUNT(*) FROM public.order_item;
